@@ -51,17 +51,34 @@
                                         <th>Stok</th>
                                         <th>Harga</th>
                                         <th>Jumlah Terjual</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($data as $v)
                                     <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                        <td>6</td>
+                                        <td>{{ $no++ }}</td>
+                                        <td>{{ $v->namaProduk }}</td>
+                                        <td style="text-transform:uppercase">{{ $v->jenisProduk }}</td>
+                                        <td>{{ $v->stok }}</td>
+                                        <td>Rp. {{ $v->harga }}</td>
+                                        <td>{{ $v->jumlahTerjual }}</td>
+                                        <td>
+                                            <span>
+                                                <a href="/" class="btn btn-warning" data-toggle="tooltip"
+                                                    data-placement="top" title="Edit"><i class="fa fa-pencil"></i>
+                                                </a>
+                                                <form action="/" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger">
+                                                        <i class="fa fa-close color-danger"></i>
+                                                    </button>
+                                                </form>
+                                            </span>
+                                        </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

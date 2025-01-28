@@ -16,18 +16,15 @@
                 </a>
             </li>
             <li>
-                <a href="\" aria-expanded="false">
+                <a href="{{ route('admin.customer') }}" aria-expanded="false">
                     <i class="icon-user menu-icon"></i> <span class="nav-text">Customer</span>
                 </a>
             </li>
             <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-basket menu-icon"></i><span class="nav-text">Pembelian</span>
+                <a href=" /" aria-expanded="false">
+                    <i class="icon-basket menu-icon"></i><span class="nav-text">Produk Terjual</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="/">Transaksi</a></li>
-                    <li><a href="/">List Transaksi</a></li>
-                </ul>
+
             </li>
             <li>
                 <a href="\" aria-expanded="false">
