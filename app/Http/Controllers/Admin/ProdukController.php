@@ -25,4 +25,25 @@ class ProdukController extends Controller
         TabelProduk::create($data);
         return redirect()->route('admin.produk')->with('succes','Berhasil Menambah Alat Camping');
     }
+    public function edit (String $id){
+
+        $data = TabelProduk::findOrFail($id);
+
+        return view('admin.produk.edit', compact('data'));
+    }
+
+    public function update(Request $request){
+        $data = $request->all();
+
+        $item = TabelProduk::find($request->id);
+        
+        $item->update($data);
+
+        return redirect()->route('admin.produk')->with('succes','Berhasil Edit Produk');
+    }
+
+    public function hapus (){
+
+    }
+
 }

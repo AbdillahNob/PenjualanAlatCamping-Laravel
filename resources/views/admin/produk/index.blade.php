@@ -65,8 +65,9 @@
                                         <td>{{ $v->jumlahTerjual }}</td>
                                         <td>
                                             <span>
-                                                <a href="/" class="btn btn-warning" data-toggle="tooltip"
-                                                    data-placement="top" title="Edit"><i class="fa fa-pencil"></i>
+                                                <a href="{{ route('edit.produk', $v->id) }}" class="btn btn-warning"
+                                                    data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                        class="fa fa-pencil"></i>
                                                 </a>
                                                 <form action="/" method="POST" class="d-inline">
                                                     @csrf
