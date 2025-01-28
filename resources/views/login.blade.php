@@ -44,12 +44,11 @@
                                     <h4>LOGIN</h4>
                                 </a>
 
-                                <form class="mt-5 mb-5 login-input" action="{{ route('customer.produk') }}"
-                                    method="get">
+                                <form class="mt-5 mb-5 login-input" action="{{ route('proses.login') }}" method="post">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Email" name="email">
-                                        @error('email')
+                                        <input type="text" class="form-control" placeholder="Username" name="username">
+                                        @error('username')
                                         <small>{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -64,10 +63,10 @@
                                         <select class="form-control" name="status" id="val-skill">
                                             <option>-- Status --</option>
                                             <option value="admin">ADMIN</option>
-                                            <option value="pelanggan">PELANGGAN</option>
+                                            <option value="customer">CUSTOMER</option>
                                         </select>
                                     </div>
-                                    <button class="btn login-form__btn submit w-100">Sign In</button>
+                                    <button class="btn login-form__btn submit w-100">Login</button>
                                 </form>
                                 <p class="mt-5 login-form__footer">Dont have account? <a
                                         href="{{ route('register.user') }}" class="text-primary">Sign Up</a> now</p>

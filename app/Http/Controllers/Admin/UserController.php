@@ -31,7 +31,6 @@ class UserController extends Controller
             'username'=>$data['username'],
             'password'=> Hash::make($data['password'])
         ]);
-
         return redirect()->route('login')->with('succes','Berhasil mendaftar akun');
     }
 }
