@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('noTelpon');
             $table->string('status',);
-            $table->string('username');
+            $table->string('username')->unique();
             $table->string('password');            
             $table->timestamps();
         });

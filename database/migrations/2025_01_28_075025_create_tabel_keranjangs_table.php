@@ -19,10 +19,12 @@ return new class extends Migration
             $table->integer('jumlahPesanan')->default(0);
             $table->decimal('totalPembayaran', 15, 2)->default(0);
             $table->enum('statusPembayaran', ['pending', 'success', 'failed'])->default('pending');
-            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('idProduk')->references('id')->on('tabel_produks')->onDelete('cascade');
             $table->date('tanggalPesan')->default(null);
             $table->timestamps();
+            
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idProduk')->references('id')->on('tabel_produks')->onDelete('cascade');
+            
         });
     }
 
