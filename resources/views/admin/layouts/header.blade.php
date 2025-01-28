@@ -20,5 +20,19 @@
             </div>
         </div>
 
+        <!-- Nama Toko dan Logo -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-right">
+
+                    <!-- Logo -->
+                    <img src="{{ asset('admin/images/logoBentala.JPEG') }}" alt="Logo Toko"
+                        style="width: 50px; height: auto; margin-right: 10px;" />
+                    <!-- Nama Toko -->
+                    <h4>BENTALA OUTDOOR</h4>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

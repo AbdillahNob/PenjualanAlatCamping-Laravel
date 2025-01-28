@@ -37,6 +37,8 @@
                         </div>
 
                         <h4 class="card-title">Produk</h4>
+                        <a href="{{ route('create.produk') }}"><button class="btn btn-primary mb-3">Tambah
+                                Produk</button></a>
 
                         <div class="table-responsive">
                             <table class="table table-bordered verticle-middle">
@@ -44,12 +46,11 @@
 
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th>Customer</th>
-                                        <th>Jenis Laundry</th>
-                                        <th>berat</th>
-                                        <th>Harga/Kg</th>
-                                        <th>Total</th>
-                                        <th>Metode Pembayaran</th>
+                                        <th>Nama Produk</th>
+                                        <th>Jenis Produk</th>
+                                        <th>Stok</th>
+                                        <th>Harga</th>
+                                        <th>Jumlah Terjual</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,7 +61,6 @@
                                         <td>4</td>
                                         <td>5</td>
                                         <td>6</td>
-                                        <td>7</td>
                                     </tr>
                                 </tbody>
                             </table>

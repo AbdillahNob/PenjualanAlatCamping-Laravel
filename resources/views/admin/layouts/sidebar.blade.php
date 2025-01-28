@@ -30,7 +30,7 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ route('admin.produk') }}" aria-expanded="false">
+                <a href="\" aria-expanded="false">
                     <i class="icon-grid menu-icon"></i><span class="nav-text">Kelola Laporan</span>
                 </a>
             </li>

@@ -25,7 +25,12 @@ Route::get('/create', 'App\Http\Controllers\Admin\UserController@create')->name(
 Route::post('/store', 'App\Http\Controllers\Admin\UserController@store')->name('store.user');
 
 
+// CUSTOMER
 Route::get('/produkCustomer', 'App\Http\Controllers\Customer\ProdukController@index')->name('customer.produk');
 
+// ADMIN
 Route::get('/dashboardAdmin', 'App\Http\Controllers\DashboardController@index')->name('index.dashboard');
+
 Route::get('/produkAdmin', 'App\Http\Controllers\Admin\ProdukController@index')->name('admin.produk');
+Route::get('/createProduk', 'App\Http\Controllers\Admin\ProdukController@create')->name('create.produk');
+Route::post('/storeProduk', 'App\Http\Controllers\Admin\ProdukController@store')->name('store.produk');
