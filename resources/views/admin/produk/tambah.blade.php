@@ -23,11 +23,14 @@
                             <form action="{{ route('store.produk') }}" method="post">
                                 @csrf
                                 <div class="form-row">
+                                    <!-- Nama Produk -->
                                     <div class="form-group col-md-6">
                                         <label>Nama Produk</label>
                                         <input type="text" name="namaProduk" class="form-control" placeholder="Nama">
                                     </div>
-                                    <div class="form-group">
+                                    <!-- Pilih Jenis Alat -->
+                                    <div class="form-group col-md-6">
+                                        <label>Jenis Produk</label>
                                         <select class="form-control" name="jenisProduk" id="val-skill">
                                             <option>-- Pilih Jenis Alat --</option>
                                             <option value="tenda">Tenda</option>
@@ -42,10 +45,12 @@
                                             <option value="kursi dan meja lipat">Kursi dan Meja Lipat</option>
                                         </select>
                                     </div>
+                                    <!-- Stok -->
                                     <div class="form-group col-md-6">
                                         <label>Stok</label>
                                         <input type="number" name="stok" class="form-control" placeholder="Stok">
                                     </div>
+                                    <!-- Harga -->
                                     <div class="form-group col-md-6">
                                         <label>Harga</label>
                                         <input type="number" name="harga" class="form-control"
