@@ -26,15 +26,17 @@
                                     <!-- Nama Produk -->
                                     <div class="form-group col-md-6">
                                         <label>Nama Produk</label>
-                                        <input type="text" name="namaProduk" class="form-control" placeholder="Nama">
+                                        <input type="text" name="namaProduk" class="form-control" placeholder="Nama"
+                                            required>
                                     </div>
                                     <!-- Pilih Jenis Alat -->
                                     <div class="form-group col-md-6">
                                         <label>Jenis Produk</label>
-                                        <select class="form-control" name="jenisProduk" id="val-skill">
-                                            <option>-- Pilih Jenis Alat --</option>
+                                        <select class="form-control" name="jenisProduk" id="val-skill" required>
+                                            <option value="">-- Pilih Jenis Alat --</option>
                                             <option value="tenda">Tenda</option>
                                             <option value="flysheet">Flysheet</option>
+                                            <option value="sepatu">Sepatu</option>
                                             <option value="matras">Matras</option>
                                             <option value="sleeping bag">Sleeping Bag</option>
                                             <option value="kompor portable">Kompor Portable</option>
@@ -48,13 +50,14 @@
                                     <!-- Stok -->
                                     <div class="form-group col-md-6">
                                         <label>Stok</label>
-                                        <input type="number" name="stok" class="form-control" placeholder="Stok">
+                                        <input type="number" name="stok" class="form-control" placeholder="Stok"
+                                            required>
                                     </div>
                                     <!-- Harga -->
                                     <div class="form-group col-md-6">
                                         <label>Harga</label>
                                         <input type="number" name="harga" class="form-control"
-                                            placeholder="Harga Produk">
+                                            placeholder="Harga Produk" required>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-dark">Tambah</button>

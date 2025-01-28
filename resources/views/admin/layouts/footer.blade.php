@@ -37,3 +37,13 @@ Swal.fire({
 </script>
 }
 @endif
+@if($message = Session::get('failed')){
+<script>
+Swal.fire({
+    title: "INFO",
+    text: "{{ $message }}",
+    icon: "error"
+});
+</script>
+}
+@endif

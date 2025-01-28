@@ -41,6 +41,8 @@
                                             <option value="flysheet"
                                                 {{ $data->jenisProduk == 'flysheet' ? 'selected' : '' }}>Flysheet
                                             </option>
+                                            <option value="sepatu"
+                                                {{ $data->jenisProduk == 'sepatu' ? 'selected' : '' }}>Sepatu</option>
                                             <option value="matras"
                                                 {{ $data->jenisProduk == 'matras' ? 'selected' : ''}}>Matras</option>
                                             <option value="sleeping bag"

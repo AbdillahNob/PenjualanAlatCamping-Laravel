@@ -25,3 +25,25 @@
 
 
 <script src="{{ asset('admin/js/dashboard/dashboard-1.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if($message = Session::get('succes')){
+<script>
+Swal.fire({
+    title: "INFO",
+    text: "{{ $message }}",
+    icon: "success"
+});
+</script>
+}
+@endif
+@if($message = Session::get('failed')){
+<script>
+Swal.fire({
+    title: "INFO",
+    text: "{{ $message }}",
+    icon: "error"
+});
+</script>
+}
+@endif

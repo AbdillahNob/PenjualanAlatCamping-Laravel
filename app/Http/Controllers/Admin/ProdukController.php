@@ -20,9 +20,17 @@ class ProdukController extends Controller
     }
     public function store (Request $request){
 
-        $data = $request->all();
+        $validated = $request->validate([
+            'jenisProduk'=>'required',
+            'namaProduk'=>'required|string|max:255',
+            'stok'=>'required|integer|min:0',
+            'harga'=>'required|numeric|min:0',
+        ]);
+        if(empty($validated['jenisProduk'])){
+            return redirect()->back()->with('failed','Jenis Produk anda kosong!');
+        }
 
-        TabelProduk::create($data);
+        TabelProduk::create($validated);
         return redirect()->route('admin.produk')->with('succes','Berhasil Menambah Alat Camping');
     }
     public function edit (String $id){
@@ -42,8 +50,10 @@ class ProdukController extends Controller
         return redirect()->route('admin.produk')->with('succes','Berhasil Edit Produk');
     }
 
-    public function hapus (){
-
+    public function delete (String $id){
+        $data = TabelProduk::findOrFail($id);
+        $data->delete();
+        return redirect()->route('admin.produk')->with('succes','Berhasil Hapus Data Produk');
     }
 
 }

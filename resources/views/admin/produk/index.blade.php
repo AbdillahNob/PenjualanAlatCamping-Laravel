@@ -69,11 +69,14 @@
                                                     data-toggle="tooltip" data-placement="top" title="Edit"><i
                                                         class="fa fa-pencil"></i>
                                                 </a>
-                                                <form action="/" method="POST" class="d-inline">
+                                                <form action="{{ route('destroy.produk', $v->id) }}" method="POST"
+                                                    class="d-inline"
+                                                    onsubmit="return confirm('Apakah anda yakin ingin menghapus produk ini ?')">
                                                     @csrf
                                                     @method('delete')
-                                                    <button class="btn btn-danger">
-                                                        <i class="fa fa-close color-danger"></i>
+                                                    <button class="btn btn-danger"
+                                                        onsubmit="return confirm('Apakah anda yakin ingin menghapus produk ini ?')">
+                                                        <i class="fa fa-close color-danger" onPre></i>
                                                     </button>
                                                 </form>
                                             </span>
