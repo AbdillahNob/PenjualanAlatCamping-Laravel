@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/login', 'App\Http\Controllers\Customer\ProdukController@index')->name('customer.produk');
+Route::get('/produk', 'App\Http\Controllers\Customer\ProdukController@index')->name('customer.produk');

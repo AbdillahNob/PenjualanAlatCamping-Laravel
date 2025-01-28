@@ -9,14 +9,33 @@
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Produk</a></li>
             </ol>
         </div>
+
     </div>
+
 
     <div class="container-fluid">
         <div class="row">
 
             <div class="col-lg-12">
                 <div class="card">
+
                     <div class="card-body">
+                        <div class="header-right">
+                            <div class="input-group icons">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
+                                        id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+                                </div>
+                                <input type="search" class="form-control" placeholder="Cari Alat Camping"
+                                    aria-label="Cari Alat Camping">
+                                <div class="drop-down animated flipInX d-md-none">
+                                    <form action="#">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                         <h4 class="card-title">Produk</h4>
 
                         <div class="table-responsive">
