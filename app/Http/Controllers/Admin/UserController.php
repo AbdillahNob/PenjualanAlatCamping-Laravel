@@ -13,8 +13,20 @@ class UserController extends Controller
         return view('register');
     }
     public function store(Request $request){
+               
+        $validate = $request->validate([
+            'namaLengkap'=>'required',
+            'jenisKelamin'=>'required',
+            'alamat'=>'required',
+            'noTelpon'=>'required',
+            'status'=>'required',
+            'username'=>'required',
+            'password'=>'required'
+        ]);
         
-       $data = $request->all();
+        if(empty($validate['status'] || $validate['jenisKelamin'])){
+            return redirect()->route('register.user')->with('failed','Kolom inputan tidak boleh ada yang kosong');
+        }
 
        $username = $request->input('username');
        $cekUsername = User::where('username', $username)->first();
@@ -23,13 +35,13 @@ class UserController extends Controller
         };
         
         User::create([
-            'namaLengkap'=>$data['namaLengkap'],
-            'jenisKelamin'=>$data['jenisKelamin'],
-            'alamat'=>$data['alamat'],
-            'noTelpon'=>$data['noTelpon'],
-            'status'=>$data['status'],
-            'username'=>$data['username'],
-            'password'=> Hash::make($data['password'])
+            'namaLengkap'=>$validate['namaLengkap'],
+            'jenisKelamin'=>$validate['jenisKelamin'],
+            'alamat'=>$validate['alamat'],
+            'noTelpon'=>$validate['noTelpon'],
+            'status'=>$validate['status'],
+            'username'=>$validate['username'],
+            'password'=> Hash::make($validate['password'])
         ]);
         return redirect()->route('login')->with('succes','Berhasil mendaftar akun');
     }

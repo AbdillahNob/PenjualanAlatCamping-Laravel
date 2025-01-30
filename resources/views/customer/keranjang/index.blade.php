@@ -19,25 +19,31 @@
                         <div class="table-responsive">
                             <table class="table table-bordered verticle-middle">
                                 <thead>
-
                                     <tr>
                                         <th scope="col">No</th>
                                         <th>Nama Produk</th>
+                                        <th>Jenis Produk</th>
                                         <th>Harga</th>
-                                        <th>Jumlah Pesanan</th>
-                                        <th>Total Pembayaran</th>
-                                        <th>Tanggal Pembayaran</th>
+                                        <th>Checkout</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($dataKeranjang as $index => $v)
                                     <tr>
-                                        <td>1</td>
-                                        <td style="text-transform:uppercase">Tenda Forester</td>
-                                        <td>Rp. 90.000</td>
-                                        <td>2</td>
-                                        <td>Rp. 180.000</td>
-                                        <td>Kamis, 2 Februari 2025</td>
+                                        <td>{{ $no++ }}</td>
+                                        <td style="text-transform:uppercase">{{ $v->produk->namaProduk }}</td>
+                                        <td>{{ $v->produk->jenisProduk }}</td>
+                                        <td>{{ $v->produk->harga }}</td>
+                                        <td>
+                                            <span>
+                                                <a href="{{ route('pesan.checkout', $v->id) }}" class="btn btn-success"
+                                                    data-toggle="tooltip" data-placement="top" title="Checkout"><i
+                                                        class="fa fa-shopping-cart"></i>
+                                                </a>
+                                            </span>
+                                        </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

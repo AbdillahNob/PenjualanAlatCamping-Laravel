@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();   
             $table->unsignedBigInteger('idUser');
             $table->unsignedBigInteger('idProduk');
-            $table->string('noTelpon')->default(null);
+            $table->string('noTelpon')->nullable();
             $table->integer('jumlahPesanan')->default(0);
             $table->decimal('totalPembayaran', 15, 2)->default(0);
-            $table->enum('statusPembayaran', ['pending', 'success', 'failed'])->default('pending');
-            $table->date('tanggalPesan')->default(null);
+            $table->enum('statusPembayaran', ['pending', 'success', 'failed'])->default('pending');            
             $table->timestamps();
             
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');

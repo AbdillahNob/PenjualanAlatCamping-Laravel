@@ -9,6 +9,7 @@ class TabelProduk extends Model
 {
     use HasFactory;
 
+    protected $table = 'tabel_produks';
     protected $fillable = [
         'namaProduk',
         'jenisProduk',
@@ -16,4 +17,8 @@ class TabelProduk extends Model
         'harga',
         'jumlahTerjual',        
     ];
-}
+
+    public function keranjang(){
+        return $this->hasMany(TabelKeranjang::class, 'idProduk','id');
+    }
+}   

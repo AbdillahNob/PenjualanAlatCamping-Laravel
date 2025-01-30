@@ -44,6 +44,7 @@
                                         <th>Stok</th>
                                         <th>Harga</th>
                                         <th>Jumlah Terjual</th>
+                                        <th>Pesan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,6 +56,14 @@
                                         <td>{{ $v->stok }}</td>
                                         <td>Rp. {{ $v->harga }}</td>
                                         <td>{{ $v->jumlahTerjual }}</td>
+                                        <td>
+                                            <span>
+                                                <a href="{{ route('pesan.produk', $v->id) }}" class="btn btn-warning"
+                                                    data-toggle="tooltip" data-placement="top" title="Pesan"><i
+                                                        class="fa fa-shopping-cart"></i>
+                                                </a>
+                                            </span>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

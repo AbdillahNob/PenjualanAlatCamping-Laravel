@@ -24,10 +24,13 @@ Route::get('/logOut', 'App\Http\Controllers\LoginController@logOut')->name('logO
 Route::get('/create', 'App\Http\Controllers\Admin\UserController@create')->name('register.user');
 Route::post('/store', 'App\Http\Controllers\Admin\UserController@store')->name('store.user');
 
-
 // CUSTOMER
 Route::get('/produkCustomer', 'App\Http\Controllers\Customer\ProdukController@index')->name('customer.produk');
-Route::get('/keranjangCustomer', 'App\Http\Controllers\Customer\KeranjangController@index')->name('customer.keranjang');
+Route::get('/tambahKeranjang{id}', 'App\Http\Controllers\Customer\KeranjangController@tambahKeranjang')->name('pesan.produk'); //Proses setelah di halaman Produk qt klik masukkan keranjang ke suatu produk
+Route::get('/keranjangCustomer', 'App\Http\Controllers\Customer\KeranjangController@index')->name('customer.keranjang'); //Tampilan Keranjang
+Route::get('/checkoutKeranjang{id}', 'App\Http\Controllers\Customer\KeranjangController@checkoutKeranjang')->name('pesan.checkout');
+Route::put('/bayarCheckout', 'App\Http\Controllers\Customer\KeranjangController@bayarKeranjang')->name('bayar.checkout');
+
 
 // ADMIN
 Route::get('/dashboardAdmin', 'App\Http\Controllers\DashboardController@index')->name('index.dashboard');

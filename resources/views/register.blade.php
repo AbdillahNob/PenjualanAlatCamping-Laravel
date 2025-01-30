@@ -52,8 +52,8 @@
                                             name="namaLengkap" required>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" name="jenisKelamin" id="val-skill">
-                                            <option>-- Pilih Jenis Kelamin --</option>
+                                        <select class="form-control" name="jenisKelamin" id="val-skill" required>
+                                            <option value="">-- Pilih Jenis Kelamin --</option>
                                             <option value="pria">Pria</option>
                                             <option value="wanita">Wanita</option>
                                         </select>
@@ -75,8 +75,8 @@
                                             placeholder="Password" required>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" name="status" id="val-skill">
-                                            <option>-- Pilih Status --</option>
+                                        <select class="form-control" name="status" id="val-skill" required>
+                                            <option value="">-- Pilih Status --</option>
                                             <option value="admin">ADMIN</option>
                                             <option value="customer">CUSTOMER</option>
                                         </select>
