@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li>
-                <a href=" /" aria-expanded="false">
+                <a href="{{ route('admin.keranjang') }}" aria-expanded="false">
                     <i class="icon-basket menu-icon"></i><span class="nav-text">Produk Terjual</span>
                 </a>
 

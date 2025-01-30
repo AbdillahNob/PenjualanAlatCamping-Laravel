@@ -1,4 +1,4 @@
-@extends('customer.layouts.index')
+@extends('admin.layouts.index')
 
 @section('content')
 <div class="content-body">
@@ -6,7 +6,7 @@
     <div class="row page-titles mx-0">
         <div class="col p-md-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Produk</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Produk Terjual</a></li>
             </ol>
         </div>
 
@@ -20,21 +20,8 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <div class="header-right">
-                            <div class="input-group icons">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3"
-                                        id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
-                                </div>
-                                <input type="search" class="form-control" placeholder="Cari Alat Camping"
-                                    aria-label="Cari Alat Camping">
-                                <div class="drop-down animated flipInX d-md-none">
-                                    <form action="#">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+
+                        <h4 class="card-title">Riwayat Produk Terjual</h4>
 
                         <div class="table-responsive">
                             <table class="table table-bordered verticle-middle">
@@ -42,24 +29,26 @@
 
                                     <tr>
                                         <th scope="col">No</th>
+                                        <th>Nama Customer</th>
+                                        <th>No Telpon</th>
                                         <th>Nama Produk</th>
-                                        <th>Jenis Produk</th>
-                                        <th>Stok</th>
                                         <th>Harga</th>
-                                        <th>Jumlah Terjual</th>
+                                        <th>Jumlah Pesanan</th>
+                                        <th>Total Pembayaran</th>
+                                        <th>Tanggal Pembayaran</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $v)
                                     <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $v->namaProduk }}</td>
-                                        <td style="text-transform:uppercase">{{ $v->jenisProduk }}</td>
-                                        <td>{{ $v->stok }}</td>
-                                        <td>Rp. {{ $v->harga }}</td>
-                                        <td>{{ $v->jumlahTerjual }}</td>
+                                        <td>1</td>
+                                        <td>asda</td>
+                                        <td>0324832</td>
+                                        <td style="text-transform:uppercase">Tenda Forester</td>
+                                        <td>Rp. 90.000</td>
+                                        <td>2</td>
+                                        <td>Rp. 180.000</td>
+                                        <td>Kamis, 2 Februari 2025</td>
                                     </tr>
-                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

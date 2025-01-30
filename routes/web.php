@@ -39,3 +39,5 @@ Route::put('/updateProduk/{id}', 'App\Http\Controllers\Admin\ProdukController@up
 Route::delete('/deleteProduk/{id}', 'App\Http\Controllers\Admin\ProdukController@delete')->name('destroy.produk');
 
 Route::get('/dataCustomer', 'App\Http\Controllers\Admin\CustomerController@index')->name('admin.customer');
+
+Route::get('/ProdukTerjual', 'App\Http\Controllers\Admin\KeranjangController@index')->name('admin.keranjang');

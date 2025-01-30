@@ -9,13 +9,9 @@
             </li>
             <li class="nav-label">Apps</li>
             <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                <a href="\" aria-expanded="false">
                     <i class="icon-basket menu-icon"></i><span class="nav-text">Keranjang Belanja</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="/">Transaksi</a></li>
-                    <li><a href="/">List Transaksi</a></li>
-                </ul>
             </li>
             <li>
                 <a href="\" aria-expanded="false">
