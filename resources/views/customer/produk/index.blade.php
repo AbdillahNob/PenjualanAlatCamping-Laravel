@@ -9,13 +9,10 @@
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Produk</a></li>
             </ol>
         </div>
-
     </div>
-
 
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-lg-12">
                 <div class="card">
 
@@ -69,17 +66,6 @@
         </div>
         <!-- #/ container -->
     </div>
-    <!--**********************************
-                                                                                    Content body end
-                                                                                ***********************************-->
-
-
-    <!--**********************************
-                                                                                    Footer start
-                                                                                ***********************************-->
-    <!--**********************************
-                                                                                    Footer end
-                                                                                    ***********************************-->
     {{-- <div class="footer">
                 <div class="copyright">
                     <p>Copyright &copy; Designed & Developed by <a

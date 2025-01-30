@@ -27,6 +27,7 @@ Route::post('/store', 'App\Http\Controllers\Admin\UserController@store')->name('
 
 // CUSTOMER
 Route::get('/produkCustomer', 'App\Http\Controllers\Customer\ProdukController@index')->name('customer.produk');
+Route::get('/keranjangCustomer', 'App\Http\Controllers\Customer\KeranjangController@index')->name('customer.keranjang');
 
 // ADMIN
 Route::get('/dashboardAdmin', 'App\Http\Controllers\DashboardController@index')->name('index.dashboard');

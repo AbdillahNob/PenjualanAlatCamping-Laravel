@@ -9,7 +9,7 @@
             </li>
             <li class="nav-label">Apps</li>
             <li>
-                <a href="\" aria-expanded="false">
+                <a href="{{ route('customer.keranjang') }}" aria-expanded="false">
                     <i class="icon-basket menu-icon"></i><span class="nav-text">Keranjang Belanja</span>
                 </a>
             </li>
