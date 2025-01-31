@@ -13,7 +13,7 @@ use Illuminate\Support\Carbon;
 class KeranjangController extends Controller
 {
     public function index(){                
-        $dataKeranjang = TabelKeranjang::where('idUser', Auth::id())->where('statusPembayaran', 'pending')->with('produk')->get();
+        $dataKeranjang = TabelKeranjang::where('idUser', Auth::id())->where('statusPembayaran', 'pending')->with('produk')->orderBy('updated_at','desc')->get();
         $no = 1;
 
         return view('customer.keranjang.index', compact('dataKeranjang','no'));
@@ -105,7 +105,7 @@ class KeranjangController extends Controller
 
     public function riwayat(){
             $idUser = Auth::id();
-            $dataKeranjang = TabelKeranjang::where('idUser', $idUser)->where('statusPembayaran','success')->with(['produk','user'])->get();
+            $dataKeranjang = TabelKeranjang::where('idUser', $idUser)->where('statusPembayaran','success')->with(['produk','user'])->orderBy('updated_at','desc')->get();
             $no = 1;
 
             return view('customer.riwayat.index', compact('dataKeranjang','no'));

@@ -17,8 +17,8 @@ class LaporanController extends Controller
  
          // Ambil data penjualan yang sukses dalam rentang tanggal
          $laporan = TabelKeranjang::where('statusPembayaran', 'success')
-                     ->whereBetween('created_at', [$startDate, $endDate])
-                     ->orderBy('created_at', 'desc')
+                     ->whereBetween('updated_at', [$startDate, $endDate])
+                     ->orderBy('updated_at', 'desc')
                      ->get();
  
          // Hitung Total produk terjual dan total pendapatan
@@ -34,8 +34,8 @@ class LaporanController extends Controller
 
         // Ambil data penjualan yang sukses dalam rentang tanggal
         $laporan = TabelKeranjang::where('statusPembayaran', 'success')
-                    ->whereBetween('created_at', [$startDate, $endDate])
-                    ->orderBy('created_at', 'desc')
+                    ->whereBetween('updated_at', [$startDate, $endDate])
+                    ->orderBy('updated_at', 'desc')
                     ->get();
 
         // Hitung Total produk terjual dan total pendapatan
@@ -49,8 +49,8 @@ class LaporanController extends Controller
         $endDate = $request->input('end_date', Carbon::now()->endOfMonth()->toDateString());
     
         $laporan = TabelKeranjang::where('statusPembayaran', 'success')
-                    ->whereBetween('created_at', [$startDate, $endDate])
-                    ->orderBy('created_at', 'desc')
+                    ->whereBetween('updated_at', [$startDate, $endDate])
+                    ->orderBy('updated_at', 'desc')
                     ->get();
 
         // Total produk terjual dan total pendapatan

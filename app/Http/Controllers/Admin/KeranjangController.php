@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class KeranjangController extends Controller
 {
     public function index(){
-        $data = TabelKeranjang::where('statusPembayaran', 'success')->with(['produk','user'])->get();
+        $data = TabelKeranjang::where('statusPembayaran', 'success')->with(['produk','user'])->orderBy('updated_at','desc')->get();
         $no =1;
 
         return view('admin.pembelian.index', compact('data','no'));

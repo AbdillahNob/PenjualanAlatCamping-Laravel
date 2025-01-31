@@ -70,7 +70,7 @@
                                         <td>{{ $data->produk->namaProduk }}</td>
                                         <td>{{ $data->jumlahPesanan }}</td>
                                         <td>Rp {{ number_format($data->totalPembayaran, 0, ',', '.') }}</td>
-                                        <td>{{ date('d-m-Y', strtotime($data->created_at)) }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($data->updated_at)) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
