@@ -33,7 +33,7 @@
                                         <td>{{ $no++ }}</td>
                                         <td style="text-transform:uppercase">{{ $v->produk->namaProduk }}</td>
                                         <td>{{ $v->produk->jenisProduk }}</td>
-                                        <td>{{ $v->produk->harga }}</td>
+                                        <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
                                         <td>
                                             <span>
                                                 <a href="{{ route('pesan.checkout', $v->idProduk) }}"

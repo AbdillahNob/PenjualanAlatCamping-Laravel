@@ -61,7 +61,7 @@
                                         <td>{{ $v->namaProduk }}</td>
                                         <td style="text-transform:uppercase">{{ $v->jenisProduk }}</td>
                                         <td>{{ $v->stok }}</td>
-                                        <td>Rp. {{ $v->harga }}</td>
+                                        <td>Rp. {{ number_format($v->harga, 0, ',', '.') }}</td>
                                         <td>{{ $v->jumlahTerjual }}</td>
                                         <td>
                                             <span>

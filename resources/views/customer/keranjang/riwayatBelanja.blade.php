@@ -37,9 +37,9 @@
                                         <td style="text-transform:uppercase">{{ $v->produk->namaProduk }}</td>
                                         <td>{{ $v->produk->jenisProduk }}</td>
                                         <td>{{ $v->user->noTelpon }}</td>
-                                        <td>{{ $v->produk->harga }}</td>
+                                        <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
                                         <td>{{ $v->jumlahPesanan }}</td>
-                                        <td>{{ $v->totalPembayaran }}</td>
+                                        <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
                                         <td>{{ $v->updated_at }}</td>
                                     </tr>
                                     @endforeach

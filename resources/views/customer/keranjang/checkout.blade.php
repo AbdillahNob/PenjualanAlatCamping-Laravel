@@ -81,7 +81,8 @@
                                     </label>
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control" value="{{ $checkout->produk->harga }}"
-                                            id="harga" name="harga" placeholder="{{ $checkout->produk->harga }}"
+                                            id="harga" name="harga"
+                                            placeholder="{{ number_format($checkout->produk->harga, 0, ',', '.') }}"
                                             readonly>
                                     </div>
                                 </div>
@@ -92,7 +93,8 @@
                                     </label>
                                     <div class="col-lg-6">
                                         <input type="text" id="totalPembayaran" class="form-control"
-                                            name="totalPembayaran" value="{{ $checkout->totalPembayaran}}"
+                                            name="totalPembayaran"
+                                            value="{{ number_format($checkout->totalPembayaran, 0, ',', '.')}}"
                                             placeholder="Masukkan Total Pembayaran.." readonly>
                                     </div>
                                 </div>
