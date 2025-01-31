@@ -27,7 +27,7 @@
 
             </li>
             <li>
-                <a href="\" aria-expanded="false">
+                <a href="{{ route('admin.laporan') }}" aria-expanded="false">
                     <i class="icon-grid menu-icon"></i><span class="nav-text">Kelola Laporan</span>
                 </a>
             </li>

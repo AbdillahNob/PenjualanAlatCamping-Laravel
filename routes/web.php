@@ -54,3 +54,7 @@ Route::prefix('customer')->middleware(['auth', 'status:customer'])->group(functi
 
     // KERANJANG
     Route::get('/ProdukTerjual', 'App\Http\Controllers\Admin\KeranjangController@index')->name('admin.keranjang');
+
+    // LAPORAN
+    Route::get('/AdminLaporan', 'App\Http\Controllers\Admin\LaporanController@index')->name('admin.laporan');
+    Route::get('/ProsesLaporan', 'App\Http\Controllers\Admin\LaporanController@proses')->name('proses.laporan');
