@@ -108,6 +108,6 @@ class KeranjangController extends Controller
             $dataKeranjang = TabelKeranjang::where('idUser', $idUser)->where('statusPembayaran','success')->with(['produk','user'])->get();
             $no = 1;
 
-            return view('customer.keranjang.riwayatBelanja', compact('dataKeranjang','no'));
+            return view('customer.riwayat.index', compact('dataKeranjang','no'));
     }
 }

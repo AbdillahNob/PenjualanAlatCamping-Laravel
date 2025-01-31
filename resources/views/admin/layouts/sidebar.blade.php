@@ -32,7 +32,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('logOut.login') }}" aria-expanded="false">
+                <a href="{{ route('logOut.login') }}" aria-expanded="false"
+                    onclick="return confirm('Apakah anda yakin ingin LogOut ?')">
                     <i class="icon-logout menu-icon"></i><span class="nav-text">logout</span>
                 </a>
             </li>
