@@ -39,16 +39,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($data as $v)
                                     <tr>
-                                        <td>1</td>
-                                        <td>asda</td>
-                                        <td>0324832</td>
-                                        <td style="text-transform:uppercase">Tenda Forester</td>
-                                        <td>Rp. 90.000</td>
-                                        <td>2</td>
-                                        <td>Rp. 180.000</td>
-                                        <td>Kamis, 2 Februari 2025</td>
+                                        <td>{{ $no++ }}</td>
+                                        <td>{{ $v->user->namaLengkap }}</td>
+                                        <td>{{ $v->user->noTelpon }}</td>
+                                        <td style="text-transform:uppercase">{{ $v->produk->namaProduk }}</td>
+                                        <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
+                                        <td>{{ $v->jumlahPesanan }}</td>
+                                        <td>Rp. {{ number_format($v->totalPembayaran, 0, ',', '.') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($v->updated_at)->format('d/m/Y') }}</td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
