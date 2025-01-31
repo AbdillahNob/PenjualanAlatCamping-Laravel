@@ -29,7 +29,7 @@ Route::get('/produkCustomer', 'App\Http\Controllers\Customer\ProdukController@in
 Route::get('/tambahKeranjang{id}', 'App\Http\Controllers\Customer\KeranjangController@tambahKeranjang')->name('pesan.produk'); //Proses setelah di halaman Produk qt klik masukkan keranjang ke suatu produk
 Route::get('/keranjangCustomer', 'App\Http\Controllers\Customer\KeranjangController@index')->name('customer.keranjang'); //Tampilan Keranjang
 Route::get('/checkoutKeranjang{id}', 'App\Http\Controllers\Customer\KeranjangController@checkoutKeranjang')->name('pesan.checkout');
-Route::put('/bayarCheckout', 'App\Http\Controllers\Customer\KeranjangController@bayarKeranjang')->name('bayar.checkout');
+Route::put('/bayarCheckout{id}', 'App\Http\Controllers\Customer\KeranjangController@bayarKeranjang')->name('bayar.checkout');
 
 
 // ADMIN

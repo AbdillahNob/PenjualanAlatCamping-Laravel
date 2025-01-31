@@ -22,9 +22,9 @@ class User extends Authenticatable
         'password'
     ];
 
-    // public function keranjang (){
-    //     return $this->hasMany(TabelKeranjang::class, 'idUser','id');
-    // }
+    public function keranjang (){
+        return $this->hasMany(TabelKeranjang::class, 'idUser','id');
+    }
 
     // /**
     //  * The attributes that should be hidden for serialization.
