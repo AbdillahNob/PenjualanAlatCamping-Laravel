@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('noTelpon')->nullable();
             $table->integer('jumlahPesanan')->default(0);
             $table->decimal('totalPembayaran', 15, 2)->default(0);
-            $table->enum('statusPembayaran', ['pending', 'success', 'failed'])->default('pending');            
+            $table->enum('statusPembayaran', ['pending', 'success', 'failed'])->default('pending');                        
             $table->timestamps();
             
             $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');

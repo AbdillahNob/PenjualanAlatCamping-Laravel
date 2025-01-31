@@ -40,7 +40,7 @@
                                         <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
                                         <td>{{ $v->jumlahPesanan }}</td>
                                         <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
-                                        <td>{{ $v->updated_at }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($v->updated_at)->format('d/m/Y') }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

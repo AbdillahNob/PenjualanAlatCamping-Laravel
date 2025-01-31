@@ -8,6 +8,7 @@ use App\Models\TabelProduk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class KeranjangController extends Controller
 {
@@ -26,11 +27,12 @@ class KeranjangController extends Controller
         if($keranjang && $keranjang->statusPembayaran == 'pending'){
             $keranjang->increment('jumlahPesanan');
         }else{        
+                           
         TabelKeranjang::create([
             'idUser' => Auth::id(),
             'idProduk'=> $produk->id,
             'jumlahPesanan'=> 1,
-            'statusPesanan'=>'pending'
+            'statusPesanan'=>'pending',        
         ]);
     }
         return redirect()->route('customer.keranjang')->with('succes','Anda Berhasil memesan produk ini');
@@ -66,6 +68,7 @@ class KeranjangController extends Controller
         $totalPembayaran = $request->input('totalPembayaran');        
         $noTelpon = $request->input('noTelpon');
 
+        // Cek agr jumlah Pesanan bkn 0 atau kurang dari 0
         if($jumlahPesanan <=0){
             return response()->json([
                 'success'=>false,
@@ -73,20 +76,21 @@ class KeranjangController extends Controller
             ], 400);
         }
 
+        // Cek agar jumlah Pesanan tidak melebihi jumlah STOK
         if($keranjang->produk->stok < $jumlahPesanan){
             return response()->json([
                 'success'=>false,
                 'message'=>'Jumlah Stok Produk ini tidak cukup'
             ], 400);
         }
-
+            
         DB::beginTransaction();
         try{
             $keranjang->update([
                 'statusPembayaran'=>'success',
                 'noTelpoon'=> $noTelpon,
                 'jumlahPesanan'=> $jumlahPesanan,
-                'totalPembayaran'=> $totalPembayaran
+                'totalPembayaran'=> $totalPembayaran                
             ]);
 
             $produk = $keranjang->produk;
@@ -97,7 +101,7 @@ class KeranjangController extends Controller
 
             DB::commit();
 
-            return redirect()->route('customer.keranjang')->with('succes','Berhasil Transaksi Pembayaran Produk');
+            return redirect()->route('customer.riwayat')->with('succes','Berhasil Transaksi Pembayaran Produk');
 
         }catch(\Exception $error){
             DB::rollBack();
