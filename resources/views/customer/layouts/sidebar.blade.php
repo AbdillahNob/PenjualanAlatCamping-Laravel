@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li>
-                <a href="\" aria-expanded="false">
+                <a href="{{ route('customer.riwayat') }}" aria-expanded="false">
                     <i class="fa fa-shopping-cart"></i> <span class="nav-text">Riwayat Belanja</span>
                 </a>
             </li>

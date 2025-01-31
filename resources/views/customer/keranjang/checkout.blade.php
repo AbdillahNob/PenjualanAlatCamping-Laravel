@@ -124,6 +124,12 @@ function hitungTotal() {
         document.getElementById('totalPembayaran').value = "";
 
     }
+
+}
+
+// Panggil hitungTotal() setelah halaman dimuat untuk menghitung nilai default
+window.onload = function() {
+    hitungTotal();
 }
 
 document.getElementById('jumlahPesanan').addEventListener('input', hitungTotal);

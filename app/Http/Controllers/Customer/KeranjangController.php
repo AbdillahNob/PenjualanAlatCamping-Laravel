@@ -23,7 +23,7 @@ class KeranjangController extends Controller
 
         // Cek apakah produk yg dipilih user yg sedang aktif sdh dipilih sebelumnya
         $keranjang = Tabelkeranjang::where('idUser',$idUser)->where('idProduk', $produk->id)->first();
-        if($keranjang){
+        if($keranjang && $keranjang->statusPembayaran == 'pending'){
             $keranjang->increment('jumlahPesanan');
         }else{        
         TabelKeranjang::create([
@@ -32,20 +32,23 @@ class KeranjangController extends Controller
             'jumlahPesanan'=> 1,
             'statusPesanan'=>'pending'
         ]);
-        }
-
+    }
         return redirect()->route('customer.keranjang')->with('succes','Anda Berhasil memesan produk ini');
     }
+    
     public function checkoutKeranjang($id){
         $produk = TabelProduk::findOrFail($id);
-        $idUser =  Auth::id();
+        if(!$produk){
+            return redirect()->route('customer.produk')->with('failed','Id Produk tidak ditemukan');
+        }
+        $idUser =  Auth::id();        
 
         $checkout = TabelKeranjang::Where('idUser', $idUser)->where('idProduk', $produk->id)->with(['user','produk'])->first();
-        if(!$checkout){
+        if(!$checkout){            
             return redirect()->route('customer.keranjang')->with('failed','Data Checkout Pesanan tidak ditemukan');
         }
         $no =1;
-
+        
         return view('customer.keranjang.checkout', compact('checkout','no'));
     }
 
@@ -105,5 +108,13 @@ class KeranjangController extends Controller
                 'error' => $error->getMessage()
             ], 500);
         }
+    }
+
+    public function riwayat(){
+            $idUser = Auth::id();
+            $dataKeranjang = TabelKeranjang::where('idUser', $idUser)->where('statusPembayaran','success')->with(['produk','user'])->get();
+            $no = 1;
+
+            return view('customer.keranjang.riwayatBelanja', compact('dataKeranjang','no'));
     }
 }

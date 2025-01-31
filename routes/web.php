@@ -30,11 +30,10 @@ Route::get('/tambahKeranjang{id}', 'App\Http\Controllers\Customer\KeranjangContr
 Route::get('/keranjangCustomer', 'App\Http\Controllers\Customer\KeranjangController@index')->name('customer.keranjang'); //Tampilan Keranjang
 Route::get('/checkoutKeranjang{id}', 'App\Http\Controllers\Customer\KeranjangController@checkoutKeranjang')->name('pesan.checkout');
 Route::put('/bayarCheckout{id}', 'App\Http\Controllers\Customer\KeranjangController@bayarKeranjang')->name('bayar.checkout');
-
+Route::get('/riwayatCustomer', 'App\Http\Controllers\Customer\KeranjangController@riwayat')->name('customer.riwayat'); //Tampilan Keranjang
 
 // ADMIN
 Route::get('/dashboardAdmin', 'App\Http\Controllers\DashboardController@index')->name('index.dashboard');
-
 Route::get('/produkAdmin', 'App\Http\Controllers\Admin\ProdukController@index')->name('admin.produk');
 Route::get('/createProduk', 'App\Http\Controllers\Admin\ProdukController@create')->name('create.produk');
 Route::post('/storeProduk', 'App\Http\Controllers\Admin\ProdukController@store')->name('store.produk');
