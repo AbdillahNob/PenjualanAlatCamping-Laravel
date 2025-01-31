@@ -6,7 +6,7 @@
     <div class="row page-titles mx-0">
         <div class="col p-md-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Produk</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Kelola Laporan</a></li>
             </ol>
         </div>
 
@@ -21,6 +21,7 @@
 
                     <div class="card-body">
                         <h2>Laporan Penjualan</h2>
+
                         <div class="table-responsive">
 
                             <!-- Form Filter Tanggal -->
@@ -37,6 +38,15 @@
                                 </a>
                             </form>
 
+                            @if(request('start_date') && request('end_date'))
+                            <div class="header-right">
+                                <a
+                                    href="{{ route('cetak.laporan', ['start_date'=>request('start_date'), 'end_date'=>request('end_date')]) }}"><button
+                                        class="btn btn-danger mb-3">Cetak PDF
+                                    </button></a>
+                            </div>
+                            @endif
+
                             <p><strong>Total Produk Terjual:</strong> {{ $totalProdukTerjual }}</p>
                             <p><strong>Total Pendapatan:</strong> Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
                             </p>
@@ -45,6 +55,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Customer</th>
                                         <th>Produk</th>
                                         <th>Jumlah</th>
                                         <th>Total Harga</th>
@@ -55,6 +66,7 @@
                                     @foreach($laporan as $index => $data)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
+                                        <td>{{ $data->user->namaLengkap }}</td>
                                         <td>{{ $data->produk->namaProduk }}</td>
                                         <td>{{ $data->jumlahPesanan }}</td>
                                         <td>Rp {{ number_format($data->totalPembayaran, 0, ',', '.') }}</td>

@@ -58,3 +58,4 @@ Route::prefix('customer')->middleware(['auth', 'status:customer'])->group(functi
     // LAPORAN
     Route::get('/AdminLaporan', 'App\Http\Controllers\Admin\LaporanController@index')->name('admin.laporan');
     Route::get('/ProsesLaporan', 'App\Http\Controllers\Admin\LaporanController@proses')->name('proses.laporan');
+    Route::get('/CetakLaporan', 'App\Http\Controllers\Admin\LaporanController@exportPDF')->name('cetak.laporan');
