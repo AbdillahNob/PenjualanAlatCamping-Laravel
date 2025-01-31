@@ -39,7 +39,7 @@
                                         <td>{{ $v->user->noTelpon }}</td>
                                         <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
                                         <td>{{ $v->jumlahPesanan }}</td>
-                                        <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
+                                        <td>Rp. {{ number_format($v->totalPembayaran, 0, ',', '.') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($v->updated_at)->format('d/m/Y') }}</td>
                                     </tr>
                                     @endforeach

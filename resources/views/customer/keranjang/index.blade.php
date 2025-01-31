@@ -23,6 +23,7 @@
                                         <th scope="col">No</th>
                                         <th>Nama Produk</th>
                                         <th>Jenis Produk</th>
+                                        <th>Jumlah yang dipesan</th>
                                         <th>Harga</th>
                                         <th>Checkout</th>
                                     </tr>
@@ -33,10 +34,11 @@
                                         <td>{{ $no++ }}</td>
                                         <td style="text-transform:uppercase">{{ $v->produk->namaProduk }}</td>
                                         <td>{{ $v->produk->jenisProduk }}</td>
+                                        <td>{{ $v->jumlahPesanan }}</td>
                                         <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
                                         <td>
                                             <span>
-                                                <a href="{{ route('pesan.checkout', $v->idProduk) }}"
+                                                <a href="{{ route('pesan.checkout', [$v->id, $v->idProduk]) }}"
                                                     class="btn btn-success" data-toggle="tooltip" data-placement="top"
                                                     title="Checkout"><i class="fa fa-shopping-cart"></i>
                                                 </a>

@@ -22,9 +22,11 @@ class KeranjangController extends Controller
         $produk = TabelProduk::findOrFail($id);
         $idUser = Auth::id();
 
-        // Cek apakah produk yg dipilih user yg sedang aktif sdh dipilih sebelumnya
-        $keranjang = Tabelkeranjang::where('idUser',$idUser)->where('idProduk', $produk->id)->first();
-        if($keranjang && $keranjang->statusPembayaran == 'pending'){
+        // Cek apakah produk yang dipilih sudah ada di keranjang user dengan status pending
+        $keranjang = Tabelkeranjang::where('idUser',$idUser)->where('idProduk', $produk->id)->where('statusPembayaran','pending')->first();
+
+        // Cek apakah produk yg dipilih user yg sedang aktif sdh dipilih sebelumnya        
+        if($keranjang){
             $keranjang->increment('jumlahPesanan');
         }else{        
                            
@@ -38,14 +40,14 @@ class KeranjangController extends Controller
         return redirect()->route('customer.keranjang')->with('succes','Anda Berhasil memesan produk ini');
     }
     
-    public function checkoutKeranjang($id){
-        $produk = TabelProduk::findOrFail($id);
+    public function checkoutKeranjang($id, $idProduk){
+        $produk = TabelProduk::findOrFail($idProduk);
         if(!$produk){
             return redirect()->route('customer.produk')->with('failed','Id Produk tidak ditemukan');
         }
         $idUser =  Auth::id();        
 
-        $checkout = TabelKeranjang::Where('idUser', $idUser)->where('idProduk', $produk->id)->with(['user','produk'])->first();
+        $checkout = TabelKeranjang::where('id',$id)->Where('idUser', $idUser)->where('idProduk', $produk->id)->with(['user','produk'])->first();
         if(!$checkout){            
             return redirect()->route('customer.keranjang')->with('failed','Data Checkout Pesanan tidak ditemukan');
         }
@@ -57,11 +59,9 @@ class KeranjangController extends Controller
 
     public function bayarKeranjang (Request $request, $id){
         $keranjang = TabelKeranjang::where('id', $id)->where('idUser', Auth::id())->with('produk')->first();
-        if(!$keranjang){
-            return response()->json([
-                'success'=>false,
-                'message'=>'Produk tidak ditemukan dalam keranjang'
-            ], 404);
+        if(!$keranjang){            
+            return redirect()->route('customer.keranjang')->with('failed','Produk tidak ditemukan dalam keranjang');
+            
         }
 
         $jumlahPesanan = $request->input('jumlahPesanan');
@@ -70,18 +70,12 @@ class KeranjangController extends Controller
 
         // Cek agr jumlah Pesanan bkn 0 atau kurang dari 0
         if($jumlahPesanan <=0){
-            return response()->json([
-                'success'=>false,
-                'message'=>'Jumlah Pesanan tidak boleh kurang dari 0 atau 0!'
-            ], 400);
+            return redirect()->route('customer.keranjang')->with('failed','Jumlah Pesanan tidak boleh kurang dari 0 atau 0!');
         }
 
         // Cek agar jumlah Pesanan tidak melebihi jumlah STOK
         if($keranjang->produk->stok < $jumlahPesanan){
-            return response()->json([
-                'success'=>false,
-                'message'=>'Jumlah Stok Produk ini tidak cukup'
-            ], 400);
+            return redirect()->route('customer.keranjang')->with('failed','Jumlah Stok Produk ini tidak cukup dari jumlah Pesanan Anda!');
         }
             
         DB::beginTransaction();
@@ -105,12 +99,7 @@ class KeranjangController extends Controller
 
         }catch(\Exception $error){
             DB::rollBack();
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat memproses pembayaran.',
-                'error' => $error->getMessage()
-            ], 500);
+            return redirect()->route('customer.keranjang')->with('failed','Terjadi kesalahan saat memproses pembayaran.');
         }
     }
 
