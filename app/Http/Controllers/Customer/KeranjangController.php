@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class KeranjangController extends Controller
 {
     public function index(){                
-        $dataKeranjang = TabelKeranjang::where('idUser', Auth::id())->with('produk')->get();
+        $dataKeranjang = TabelKeranjang::where('idUser', Auth::id())->where('statusPembayaran', 'pending')->with('produk')->get();
         $no = 1;
 
         return view('customer.keranjang.index', compact('dataKeranjang','no'));
