@@ -39,6 +39,7 @@ Route::prefix('customer')->middleware(['auth', 'status:customer'])->group(functi
 });
 
 // ----------------------------------------= ADMIN =-------------------------------------------------------------------------
+
     Route::get('/dashboardAdmin', 'App\Http\Controllers\DashboardController@index')->name('index.dashboard');
 
     // PRODUK
@@ -59,3 +60,5 @@ Route::prefix('customer')->middleware(['auth', 'status:customer'])->group(functi
     Route::get('/AdminLaporan', 'App\Http\Controllers\Admin\LaporanController@index')->name('admin.laporan');
     Route::get('/ProsesLaporan', 'App\Http\Controllers\Admin\LaporanController@proses')->name('proses.laporan');
     Route::get('/CetakLaporan', 'App\Http\Controllers\Admin\LaporanController@exportPDF')->name('cetak.laporan');
+
+    

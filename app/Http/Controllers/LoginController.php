@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 class LoginController extends Controller
 {
     public function index (){
+        // dd(Auth::user());
         return view('login');
     }
 
@@ -19,8 +20,11 @@ class LoginController extends Controller
             'password' => 'required'            
         ]);   
         $data = $request->only('status','username','password');
+        // dd($data);
         if(Auth::attempt($data)){
-            if(auth()->user()->status==='admin'){
+            $user=Auth::user();
+            if($user->status==='admin'){
+               
                 return redirect()->route('index.dashboard');
             }else{
                 return redirect()->route('customer.produk');
