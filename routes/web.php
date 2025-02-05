@@ -33,6 +33,7 @@ Route::prefix('customer')->middleware(['auth', 'status:customer'])->group(functi
     Route::get('/keranjangCustomer', 'App\Http\Controllers\Customer\KeranjangController@index')->name('customer.keranjang'); //Tampilan Keranjang
     Route::get('/checkoutKeranjang/{id}/{idProduk}', 'App\Http\Controllers\Customer\KeranjangController@checkoutKeranjang')->name('pesan.checkout');
     Route::put('/bayarCheckout{id}', 'App\Http\Controllers\Customer\KeranjangController@bayarKeranjang')->name('bayar.checkout');
+    Route::post('/midtransCallback', 'App\Http\Controllers\Customer\CallbackController@callback')->name('midtrans.callback');
 
     // RIWAYAT
     Route::get('/riwayatCustomer', 'App\Http\Controllers\Customer\KeranjangController@riwayat')->name('customer.riwayat'); //Tampilan Keranjang

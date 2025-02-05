@@ -52,8 +52,26 @@ class KeranjangController extends Controller
             return redirect()->route('customer.keranjang')->with('failed','Data Checkout Pesanan tidak ditemukan');
         }
         $no =1;
-        
-        return view('customer.keranjang.checkout', compact('checkout','no'));
+
+    // Konfigurasi Midtrans
+    \Midtrans\Config::$serverKey = config('midtrans.server_key');
+    \Midtrans\Config::$isProduction = config('midtrans.is_production');
+    \Midtrans\Config::$isSanitized = true;
+    \Midtrans\Config::$is3ds = true;
+
+    // Data transaksi
+    $params = [
+        'transaction_details' => [
+            'order_id' => "ORDER-" . $checkout->id,
+            'gross_amount' => $checkout->produk->harga * $checkout->jumlahPesanan,
+        ],
+        'customer_details' => [
+            'first_name' => $checkout->user->namaLengkap,            
+        ],
+    ];
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        return view('customer.keranjang.checkout', compact('checkout','no','snapToken'));
     }
 
 

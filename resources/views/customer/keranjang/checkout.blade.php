@@ -101,7 +101,7 @@
 
                                 <div class="form-group row">
                                     <div class="col-lg-8 ml-auto">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary" id="pay-button">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -114,6 +114,47 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Tambahkan Midtrans Snap -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+</script>
+<script>
+document.getElementById('pay-button').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    snap.pay("{{ $snapToken }}", {
+        onSuccess: function(result) {
+            sendPaymentData(result);
+        },
+        onPending: function(result) {
+            alert("Menunggu pembayaran!");
+        },
+        onError: function(result) {
+            alert("Pembayaran gagal!");
+        }
+    });
+});
+
+function sendPaymentData(result) {
+    $.ajax({
+        url: "{{ route('midtrans.callback') }}",
+        method: "POST",
+        data: {
+            _token: "{{ csrf_token() }}",
+            order_id: "{{ 'ORDER-' . $checkout->id }}",
+            transaction_status: result.transaction_status,
+            totalPembayaran: document.getElementById('totalPembayaran').value
+        },
+        success: function(response) {
+            alert("Pembayaran berhasil!");
+            window.location.href = "{{ route('customer.riwayat') }}";
+        },
+        error: function(response) {
+            alert("Gagal menyimpan pembayaran.");
+        }
+    });
+}
+</script>
+
 <script>
 function hitungTotal() {
     var jumlah = parseFloat(document.getElementById('jumlahPesanan').value);
