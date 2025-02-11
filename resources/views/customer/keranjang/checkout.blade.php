@@ -19,10 +19,9 @@
                         <h4 class="card-title">Checkout Pesanan Anda</h4>
 
                         <div class="form-validation">
-                            <form class="form-valide" action="{{ route('bayar.checkout', $checkout->id) }}"
-                                method="post">
+                            <form class="form-valide" method="post">
                                 @csrf
-                                @method('put')
+                                <!-- @method('put') -->
                                 <input type="hidden" name="id" value="{{ $checkout->id}}">
                                 <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="val-username">Nama Pemesan<span
@@ -38,8 +37,8 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" value="{{ $checkout->user->noTelpon }}"
-                                            name="noTelpon">
+                                        <input type="text" class="form-control" id="noTelepon"
+                                            value="{{ $checkout->user->noTelpon }}" name="noTelpon">
                                     </div>
                                 </div>
 
@@ -123,6 +122,7 @@ document.getElementById('pay-button').addEventListener('click', function(event) 
 
     snap.pay("{{ $snapToken }}", {
         onSuccess: function(result) {
+            // Kirim data transaksi ke server
             sendPaymentData(result);
         },
         onPending: function(result) {
@@ -135,23 +135,45 @@ document.getElementById('pay-button').addEventListener('click', function(event) 
 });
 
 function sendPaymentData(result) {
-    $.ajax({
-        url: "{{ route('midtrans.callback') }}",
-        method: "POST",
-        data: {
-            _token: "{{ csrf_token() }}",
-            order_id: "{{ 'ORDER-' . $checkout->id }}",
-            transaction_status: result.transaction_status,
-            totalPembayaran: document.getElementById('totalPembayaran').value
-        },
-        success: function(response) {
+    let totalPembayaran = document.getElementById('totalPembayaran').value.replace(/\./g, ''); // Hapus format ribuan
+    let jumlahPesanan = document.getElementById('jumlahPesanan').value;
+    let dataToSend = {
+        _token: "{{ csrf_token() }}",
+        order_id: "{{ 'ORDER-' . $checkout->id }}",
+        transaction_status: result.transaction_status,
+        payment_type: result.payment_type,
+        gross_amount: result.gross_amount,
+        jumlahPesanan: jumlahPesanan,
+        noTelpon: document.getElementById('noTelepon').value,
+        totalPembayaran: totalPembayaran,
+
+    };
+
+    console.log("Data yang dikirim ke server:", dataToSend); // Debugging sebelum request dikirim
+
+    fetch("{{ route('midtrans.callback') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify(dataToSend)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Terjadi kesalahan pada server");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Respon dari server:", data); // Debugging setelah response diterima
             alert("Pembayaran berhasil!");
             window.location.href = "{{ route('customer.riwayat') }}";
-        },
-        error: function(response) {
+        })
+        .catch(error => {
+            console.error("Error:", error);
             alert("Gagal menyimpan pembayaran.");
-        }
-    });
+        });
 }
 </script>
 
@@ -162,7 +184,7 @@ function hitungTotal() {
 
     if (!isNaN(jumlah) && !isNaN(harga)) {
         var total = jumlah * harga;
-        document.getElementById('totalPembayaran').value = total.toFixed();
+        document.getElementById('totalPembayaran').value = total.toLocaleString('id-ID'); // Format angka ke ribuan
     } else {
         document.getElementById('totalPembayaran').value = "";
 

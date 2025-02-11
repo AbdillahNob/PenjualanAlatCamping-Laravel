@@ -18,6 +18,7 @@ class KeranjangController extends Controller
 
         return view('customer.keranjang.index', compact('dataKeranjang','no'));
     }
+    
     public function tambahKeranjang($id){
         $produk = TabelProduk::findOrFail($id);
         $idUser = Auth::id();
@@ -41,6 +42,7 @@ class KeranjangController extends Controller
     }
     
     public function checkoutKeranjang($id, $idProduk){
+        
         $produk = TabelProduk::findOrFail($idProduk);
         if(!$produk){
             return redirect()->route('customer.produk')->with('failed','Id Produk tidak ditemukan');
@@ -59,11 +61,12 @@ class KeranjangController extends Controller
     \Midtrans\Config::$isSanitized = true;
     \Midtrans\Config::$is3ds = true;
 
+    
     // Data transaksi
     $params = [
         'transaction_details' => [
             'order_id' => "ORDER-" . $checkout->id,
-            'gross_amount' => $checkout->produk->harga * $checkout->jumlahPesanan,
+            'gross_amount' => $checkout->produk->harga * $checkout ->jumlahPesanan,
         ],
         'customer_details' => [
             'first_name' => $checkout->user->namaLengkap,            
@@ -75,51 +78,54 @@ class KeranjangController extends Controller
     }
 
 
-    public function bayarKeranjang (Request $request, $id){
-        $keranjang = TabelKeranjang::where('id', $id)->where('idUser', Auth::id())->with('produk')->first();
-        if(!$keranjang){            
-            return redirect()->route('customer.keranjang')->with('failed','Produk tidak ditemukan dalam keranjang');
+    // public function bayarKeranjang (Request $request, $id){
+    //     $keranjang = TabelKeranjang::where('id', $id)->where('idUser', Auth::id())->with('produk')->first();
+    //     if(!$keranjang){            
+    //         return redirect()->route('customer.keranjang')->with('failed','Produk tidak ditemukan dalam keranjang');
             
-        }
+    //     }
 
-        $jumlahPesanan = $request->input('jumlahPesanan');
-        $totalPembayaran = $request->input('totalPembayaran');        
-        $noTelpon = $request->input('noTelpon');
+    //     $jumlahPesanan = $request->input('jumlahPesanan');
+    //     $totalPembayaran = $request->input('totalPembayaran');        
+    //     $noTelpon = $request->input('noTelpon');
 
-        // Cek agr jumlah Pesanan bkn 0 atau kurang dari 0
-        if($jumlahPesanan <=0){
-            return redirect()->route('customer.keranjang')->with('failed','Jumlah Pesanan tidak boleh kurang dari 0 atau 0!');
-        }
+    //     // Cek agr jumlah Pesanan bkn 0 atau kurang dari 0
+    //     if($jumlahPesanan <=0){
+    //         return redirect()->route('customer.keranjang')->with('failed','Jumlah Pesanan tidak boleh kurang dari 0 atau 0!');
+    //     }
 
-        // Cek agar jumlah Pesanan tidak melebihi jumlah STOK
-        if($keranjang->produk->stok < $jumlahPesanan){
-            return redirect()->route('customer.keranjang')->with('failed','Jumlah Stok Produk ini tidak cukup dari jumlah Pesanan Anda!');
-        }
+    //     // Cek agar jumlah Pesanan tidak melebihi jumlah STOK
+    //     if($keranjang->produk->stok < $jumlahPesanan){
+    //         return redirect()->route('customer.keranjang')->with('failed','Jumlah Stok Produk ini tidak cukup dari jumlah Pesanan Anda!');
+    //     }
             
-        DB::beginTransaction();
-        try{
-            $keranjang->update([
-                'statusPembayaran'=>'success',
-                'noTelpoon'=> $noTelpon,
-                'jumlahPesanan'=> $jumlahPesanan,
-                'totalPembayaran'=> $totalPembayaran                
-            ]);
+    //     // if($keranjang->statusPembayaran !== 'success'){
+    //     //     return redirect()->route('customer.keranjang')->with('failed','Transaksi Pembayaran anda belum berhasil');
+    //     // }
 
-            $produk = $keranjang->produk;
-            $produk->update([
-                'stok'=>$produk->stok - $jumlahPesanan,
-                'jumlahTerjual'=>$produk->jumlahTerjual + $jumlahPesanan
-            ]);
+    //     DB::beginTransaction();
+    //     try{
+    //         $keranjang->update([                
+    //             'noTelpon'=> $noTelpon,
+    //             'jumlahPesanan'=> $jumlahPesanan,
+    //             'totalPembayaran'=> $totalPembayaran                
+    //         ]);
 
-            DB::commit();
+    //         $produk = $keranjang->produk;
+    //         $produk->update([
+    //             'stok'=>$produk->stok - $jumlahPesanan,
+    //             'jumlahTerjual'=>$produk->jumlahTerjual + $jumlahPesanan
+    //         ]);
 
-            return redirect()->route('customer.riwayat')->with('succes','Berhasil Transaksi Pembayaran Produk');
+    //         DB::commit();
 
-        }catch(\Exception $error){
-            DB::rollBack();
-            return redirect()->route('customer.keranjang')->with('failed','Terjadi kesalahan saat memproses pembayaran.');
-        }
-    }
+    //         return redirect()->route('customer.riwayat')->with('succes','Berhasil Transaksi Pembayaran Produk');
+
+    //     }catch(\Exception $error){
+    //         DB::rollBack();
+    //         return redirect()->route('customer.keranjang')->with('failed','Terjadi kesalahan saat memproses pembayaran.');
+    //     }
+    // }
 
     public function riwayat(){
             $idUser = Auth::id();
