@@ -120,18 +120,43 @@
 document.getElementById('pay-button').addEventListener('click', function(event) {
     event.preventDefault();
 
-    snap.pay("{{ $snapToken }}", {
-        onSuccess: function(result) {
-            // Kirim data transaksi ke server
-            sendPaymentData(result);
-        },
-        onPending: function(result) {
-            alert("Menunggu pembayaran!");
-        },
-        onError: function(result) {
-            alert("Pembayaran gagal!");
-        }
-    });
+    let totalPembayaran = document.getElementById('totalPembayaran').value.replace(/\./g,
+        ''); // Hapus format ribuan
+
+    // Kirim request untuk mendapatkan snapToken baru
+    fetch("{{ route('midtrans.get_token') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                totalPembayaran: totalPembayaran,
+                order_id: "{{ 'ORDER-' . $checkout->id }}",
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.snapToken) {
+                snap.pay(data.snapToken, {
+                    onSuccess: function(result) {
+                        sendPaymentData(result);
+                    },
+                    onPending: function(result) {
+                        alert("Menunggu pembayaran!");
+                    },
+                    onError: function(result) {
+                        alert("Pembayaran gagal!");
+                    }
+                });
+            } else {
+                alert("Gagal mendapatkan token pembayaran.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Terjadi kesalahan saat memproses pembayaran.");
+        });
 });
 
 function sendPaymentData(result) {

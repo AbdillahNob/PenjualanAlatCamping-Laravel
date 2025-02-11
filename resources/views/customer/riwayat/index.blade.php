@@ -36,7 +36,7 @@
                                         <td>{{ $no++ }}</td>
                                         <td style="text-transform:uppercase">{{ $v->produk->namaProduk }}</td>
                                         <td>{{ $v->produk->jenisProduk }}</td>
-                                        <td>{{ $v->user->noTelpon }}</td>
+                                        <td>{{ $v->noTelpon }}</td>
                                         <td>Rp. {{ number_format($v->produk->harga, 0, ',', '.') }}</td>
                                         <td>{{ $v->jumlahPesanan }}</td>
                                         <td>Rp. {{ number_format($v->totalPembayaran, 0, ',', '.') }}</td>
