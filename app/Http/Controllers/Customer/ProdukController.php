@@ -8,28 +8,69 @@ use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
+
     public function index(Request $request)
-{
-    $search = strtolower($request->query('search')); //Konversi ke huruf kecil
-    $data = TabelProduk::all(); // Ambil semua data produk
-
-    if (!empty($search)) {
+    {
+        $search = strtolower(trim($request->query('search'))); 
+        $search = $this->normalizeText($search); 
+    
+        $data = TabelProduk::all(); 
         $filteredData = [];
-
-        foreach ($data as $produk) {
-            // Cek apakah nama produk cocok dengan algoritma Brute Force atau Rabin-Karp
-            if ($this->bruteForce($produk->namaProduk, $search) !== -1 || $this->rabinKarp($produk->namaProduk, $search) !== -1) {
-                $filteredData[] = $produk;
+    
+        if (!empty($search)) {
+            foreach ($data as $produk) {
+                $namaProdukLower = strtolower(trim($produk->namaProduk)); 
+                $namaProdukLower = $this->normalizeText($namaProdukLower); 
+    
+                // Hitung Levenshtein Distance
+                $distance = $this->levenshteinDistance($namaProdukLower, $search);
+                $maxDistance = max(2, ceil(strlen($search) * 0.5)); // Toleransi typo lebih tinggi (50%)
+    
+                // Cek kemiripan menggunakan similar_text
+                similar_text($namaProdukLower, $search, $similarity);
+    
+                // Periksa dengan Brute Force & Rabin-Karp
+                $foundBruteForce = $this->bruteForce($namaProdukLower, $search) !== -1 ? 1 : 0;
+                $foundRabinKarp = $this->rabinKarp($namaProdukLower, $search) !== -1 ? 1 : 0;
+    
+                // Skor relevansi
+                $score = (100 - $distance * 2.5) + ($similarity * 2) + ($foundBruteForce * 25) + ($foundRabinKarp * 25);
+    
+                // Simpan jika relevan
+                if ($distance <= $maxDistance || $similarity >= 45 || $foundBruteForce || $foundRabinKarp) {            
+                    $filteredData[] = [
+                        'produk' => $produk,
+                        'score' => $score
+                    ];
+                }
             }
+    
+            // Urutkan berdasarkan skor relevansi
+            usort($filteredData, function ($a, $b) {
+                return $b['score'] <=> $a['score']; 
+            });
+    
+            // Ambil hanya produk dari hasil filter
+            $data = array_column($filteredData, 'produk');
         }
-
-        $data = $filteredData; // Gunakan hasil filter
-        
+    
+        $no = 1;
+        return view('customer.produk.index', compact('data', 'no'));
     }
-    $no =1;
+    
+    // Fungsi Normalisasi untuk memperbaiki typo kecil
+    private function normalizeText($text)
+    {
+        // Hilangkan huruf berulang (contoh: "foresteerr" -> "forester")
+        $text = preg_replace('/(.)\1+/', '$1', $text);
+        
+        // Hilangkan huruf ekstra di akhir yang sering terjadi pada typo
+        $text = preg_replace('/r{2,}$/', 'r', $text); // Mengubah "foresterr" -> "forester"
+        
+        return $text;
+    }
+    
 
-    return view('customer.produk.index', compact('data', 'no'));
-}
 // Algoritma Brute Force
 private function bruteForce($text, $pattern)
 {
@@ -115,7 +156,35 @@ private function rabinKarp($text, $pattern, $prime = 101)
     }
     return -1; // Tidak ditemukan
 }
+private function levenshteinDistance($str1, $str2)
+{
+    $len1 = strlen($str1);
+    $len2 = strlen($str2);
+    $matrix = [];
 
+    if ($len1 == 0) return $len2;
+    if ($len2 == 0) return $len1;
 
+    for ($i = 0; $i <= $len1; $i++) {
+        $matrix[$i][0] = $i;
+    }
+
+    for ($j = 0; $j <= $len2; $j++) {
+        $matrix[0][$j] = $j;
+    }
+
+    for ($i = 1; $i <= $len1; $i++) {
+        for ($j = 1; $j <= $len2; $j++) {
+            $cost = ($str1[$i - 1] == $str2[$j - 1]) ? 0 : 1;
+            $matrix[$i][$j] = min(
+                $matrix[$i - 1][$j] + 1, // Penghapusan
+                $matrix[$i][$j - 1] + 1, // Penyisipan
+                $matrix[$i - 1][$j - 1] + $cost // Substitusi
+            );
+        }
+    }
+
+    return $matrix[$len1][$len2];
+}
 
 }
