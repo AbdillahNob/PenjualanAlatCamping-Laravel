@@ -10,7 +10,7 @@ class ProdukController extends Controller
 {
     public function index(Request $request)
 {
-    $search =$request->query('search');
+    $search = strtolower($request->query('search')); //Konversi ke huruf kecil
     $data = TabelProduk::all(); // Ambil semua data produk
 
     if (!empty($search)) {
@@ -33,6 +33,10 @@ class ProdukController extends Controller
 // Algoritma Brute Force
 private function bruteForce($text, $pattern)
 {
+    // Konversi ke huruf kecil
+    $text = strtolower($text);
+    $pattern = strtolower($pattern);
+
 
     $n = strlen($text);
     $m = strlen($pattern);
@@ -57,6 +61,10 @@ private function bruteForce($text, $pattern)
 // Algoritma Rabin-Karp
 private function rabinKarp($text, $pattern, $prime = 101)
 {
+    // Konversi ke huruf kecil
+    $text = strtolower($text);
+    $pattern = strtolower($pattern);
+
     $d = 256; // Jumlah karakter ASCII
     $n = strlen($text);
     $m = strlen($pattern);
