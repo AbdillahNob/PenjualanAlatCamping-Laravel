@@ -24,7 +24,7 @@ class ProdukController extends Controller
     
                 // Hitung Levenshtein Distance
                 $distance = $this->levenshteinDistance($namaProdukLower, $search);
-                $maxDistance = max(2, ceil(strlen($search) * 0.5)); // Toleransi typo lebih tinggi (50%)
+                $maxDistance = max(3, ceil(strlen($search) * 0.7)); // Toleransi typo lebih tinggi (70%)
     
                 // Cek kemiripan menggunakan similar_text
                 similar_text($namaProdukLower, $search, $similarity);
@@ -32,18 +32,21 @@ class ProdukController extends Controller
                 // Periksa dengan Brute Force & Rabin-Karp
                 $foundBruteForce = $this->bruteForce($namaProdukLower, $search) !== -1 ? 1 : 0;
                 $foundRabinKarp = $this->rabinKarp($namaProdukLower, $search) !== -1 ? 1 : 0;
-    
-                // Skor relevansi
-                $score = (100 - $distance * 2.5) + ($similarity * 2) + ($foundBruteForce * 25) + ($foundRabinKarp * 25);
-    
-                // Simpan jika relevan
-                if ($distance <= $maxDistance || $similarity >= 45 || $foundBruteForce || $foundRabinKarp) {            
+                $foundStripos = stripos($namaProdukLower, $search) !== false ? 1 : 0;
+             
+                $score = (100 - $distance * 2) + ($similarity * 1.5) + ($foundBruteForce * 25) + ($foundRabinKarp * 25) + ($foundStripos * 20);                
+                
+                    // Simpan jika relevan
+                if ($distance <= $maxDistance || $similarity >= 40 || $foundBruteForce || $foundRabinKarp || $foundStripos) {            
                     $filteredData[] = [
                         'produk' => $produk,
                         'score' => $score
                     ];
                 }
+                      
+
             }
+           
     
             // Urutkan berdasarkan skor relevansi
             usort($filteredData, function ($a, $b) {
@@ -61,14 +64,15 @@ class ProdukController extends Controller
     // Fungsi Normalisasi untuk memperbaiki typo kecil
     private function normalizeText($text)
     {
-        // Hilangkan huruf berulang (contoh: "foresteerr" -> "forester")
-        $text = preg_replace('/(.)\1+/', '$1', $text);
-        
-        // Hilangkan huruf ekstra di akhir yang sering terjadi pada typo
-        $text = preg_replace('/r{2,}$/', 'r', $text); // Mengubah "foresterr" -> "forester"
-        
+        // Hilangkan huruf berulang lebih dari dua kali berturut-turut (contoh: "campiing" -> "camping")
+        $text = preg_replace('/(.)\1{2,}/', '$1', $text); 
+    
+        // Hilangkan karakter tambahan yang sering muncul (contoh: "tendaaa" -> "tenda")
+        $text = preg_replace('/(.)\1+$/', '$1', $text); 
+    
         return $text;
     }
+    
     
 
 // Algoritma Brute Force
